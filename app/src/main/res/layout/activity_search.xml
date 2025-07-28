@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search movies..."
+        android:textColorHint="#888888"
+        android:textColor="#FFFFFF"
+        android:drawableStart="@drawable/ic_search"
+        android:background="@drawable/search_background"
+        android:padding="12dp"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/historyLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Recent searches"
+        android:textColor="#CCCCCC"
+        android:textSize="14sp"
+        android:layout_marginTop="12dp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/historyContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchResultRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp" />
+</LinearLayout>

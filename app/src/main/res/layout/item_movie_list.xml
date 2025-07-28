@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/ivPoster"
+        android:layout_width="80dp"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="Movie poster" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Movie Title"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_toEndOf="@id/ivPoster"
+        android:layout_marginStart="12dp"
+        android:layout_centerVertical="true" />
+</RelativeLayout>
