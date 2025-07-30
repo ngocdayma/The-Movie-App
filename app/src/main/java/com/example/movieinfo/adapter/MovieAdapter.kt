@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.movieinfo.R
+import com.example.movieinfo.ui.DetailActivity
 
 class MovieAdapter(private val context: Context, private val movies: List<String>) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {

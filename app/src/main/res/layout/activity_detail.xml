@@ -10,6 +10,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <CheckBox
+            android:id="@+id/checkboxWatchlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="end"
+            android:checked="false"
+            android:button="@drawable/selector_cb_add_list"
+            android:layout_marginLeft="8dp"
+            />
         <ImageView
             android:id="@+id/imagePoster"
             android:layout_width="match_parent"

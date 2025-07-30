@@ -17,7 +17,7 @@
             android:text="What do you want to watch?"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
-            android:textStyle="bold"
+            android:fontFamily="@font/poppins_semibold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -37,7 +37,7 @@
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:paddingBottom="8dp"
-            tools:listitem="@layout/item_movie" />
+            tools:listitem="@layout/item_top_movie" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"

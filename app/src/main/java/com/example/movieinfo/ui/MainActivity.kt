@@ -15,15 +15,15 @@ class MainActivity : AppCompatActivity() {
 
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.menu_home -> {
+                R.id.nav_home -> {
                     // TODO: Load home fragment or activity
                     true
                 }
-                R.id.menu_search -> {
+                R.id.nav_search -> {
                     startActivity(Intent(this, SearchActivity::class.java))
                     true
                 }
-                R.id.menu_watchlist -> {
+                R.id.nav_watchlist -> {
                     startActivity(Intent(this, WatchListActivity::class.java))
                     true
                 }

@@ -7,7 +7,7 @@ import com.example.movieinfo.R
 class WatchListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_watchlist)
+        setContentView(R.layout.acitivity_watchlist)
 
     }
 }
