@@ -1,34 +1,39 @@
 package com.example.movieinfo.ui
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.movieinfo.R
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.movieinfo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
+    private val homeFragment = HomeFragment()
+    private val searchFragment = SearchFragment()
+    private val watchlistFragment = WatchListFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        // Load mặc định là Home
+        loadFragment(homeFragment)
 
-        bottomNav.setOnItemSelectedListener { item ->
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nav_home -> {
-                    // TODO: Load home fragment or activity
-                    true
-                }
-                R.id.nav_search -> {
-                    startActivity(Intent(this, SearchActivity::class.java))
-                    true
-                }
-                R.id.nav_watchlist -> {
-                    startActivity(Intent(this, WatchListActivity::class.java))
-                    true
-                }
-                else -> false
+                R.id.nav_home -> loadFragment(homeFragment)
+                R.id.nav_search -> loadFragment(searchFragment)
+                R.id.nav_watchlist -> loadFragment(watchlistFragment)
             }
+            true
         }
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 }

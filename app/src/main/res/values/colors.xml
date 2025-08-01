@@ -5,4 +5,9 @@
     <color name="background">#242A32</color>
     <color name="blue_selected">#0296E5</color>
     <color name="gray_unselected">#AAAAAA</color>
+    <color name="dark_background">#121212</color>
+    <color name="dark_gray">#1E1E1E</color>
+    <color name="gray">#B0B0B0</color>
+    <color name="blue">#3D82F2</color>
+
 </resources>

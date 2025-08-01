@@ -1,25 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/homeScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212">
+    android:background="@color/dark_background"
+    android:padding="16dp"
+    android:fillViewport="true">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabTextColor="#AAAAAA"
-        app:tabSelectedTextColor="#FFFFFF"
-        app:tabIndicatorColor="#FFFFFF"
-        app:tabIndicatorHeight="2dp"
-        android:background="#121212"/>
+        android:orientation="vertical">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvGreeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="What do you want to watch?"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:paddingBottom="12dp" />
 
-</LinearLayout>
+        <!-- Search bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            android:background="@drawable/search_background"
+            android:padding="8dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_marginEnd="10dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="Search"
+                android:textColorHint="@color/gray"
+                android:textColor="@color/white"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFeaturedMovies"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:overScrollMode="never" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:tabIndicatorColor="@color/blue"
+            app:tabTextColor="@color/gray"
+            app:tabSelectedTextColor="@color/white"
+            app:tabIndicatorHeight="3dp"
+            app:tabMode="scrollable"
+            android:background="@android:color/transparent" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:overScrollMode="never"
+            android:nestedScrollingEnabled="false" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

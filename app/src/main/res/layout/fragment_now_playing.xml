@@ -4,11 +4,10 @@
     android:layout_height="match_parent"
     android:background="#121212">
 
-    <TextView
-        android:layout_gravity="center"
-        android:text="Now Playing"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvNowPlaying"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:clipToPadding="false" />
 </FrameLayout>

@@ -22,8 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.DetailActivity"/>
-        <activity android:name=".ui.SearchActivity"/>
-        <activity android:name=".ui.WatchListActivity"/>
+        <activity android:name=".ui.SearchFragment"/>
+        <activity android:name=".ui.WatchListFragment"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
