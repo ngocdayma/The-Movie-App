@@ -2,8 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212"
-    android:padding="16dp">
+    android:background="@color/background"
+    android:padding="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,62 +14,109 @@
             android:id="@+id/checkboxWatchlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_gravity="end"
-            android:checked="false"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
             android:button="@drawable/selector_cb_add_list"
-            android:layout_marginLeft="8dp"
-            />
-        <ImageView
-            android:id="@+id/imagePoster"
+            android:checked="false" />
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:contentDescription="Poster" />
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/textTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Movie Title"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
-
-            <TextView
-                android:id="@+id/textReleaseDate"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/imagePoster"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2025-01-01"
-                android:textColor="#AAAAAA"
-                android:textSize="14sp" />
+                android:adjustViewBounds="true"
+                android:background="@drawable/rounded_corners"
+                android:scaleType="fitCenter"
+                android:contentDescription="Poster" />
 
             <TextView
                 android:id="@+id/textRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="★ 7.8"
-                android:textColor="#FFEB3B"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="8dp"
+                android:padding="6dp"
+                android:text="8.5"
+                android:drawableStart="@drawable/ic_star"
+                android:textColor="#FF5722"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_semibold"
+                android:background="@drawable/bg_rating_box"
+                android:drawablePadding="6dp"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Movie Title"
+            android:padding="16dp"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/textReleaseDate"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="2025-01-01"
+                android:fontFamily="@font/poppins"
+                android:textColor="#AAAAAA"
+                android:textSize="14sp" />
+
+<!--            <TextView-->
+<!--                android:id="@+id/textRating"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="★ 7.8"-->
+<!--                android:textColor="#FFEB3B"-->
+<!--                android:textSize="14sp"-->
+<!--                android:layout_marginStart="16dp" />-->
+
+            <TextView
+                android:id="@+id/textDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="120m"
+                android:textColor="#AAAAAA"
+                android:fontFamily="@font/poppins"
                 android:textSize="14sp"
-                android:layout_marginStart="16dp" />
+                android:layout_marginStart="16dp"/>
+            <TextView
+                android:id="@+id/textGenre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Action, Adventure, Drama"
+                android:fontFamily="@font/poppins"
+                android:textColor="#AAAAAA"
+                android:textSize="14sp"
+                android:layout_marginStart="16dp"/>
         </LinearLayout>
 
         <TextView
             android:id="@+id/textOverview"
             android:layout_width="match_parent"
+            android:padding="16dp"
+
             android:layout_height="wrap_content"
             android:text="Movie description goes here..."
             android:textColor="#DDDDDD"
             android:textSize="16sp"
+            android:fontFamily="@font/poppins"
             android:layout_marginTop="12dp" />
 
     </LinearLayout>

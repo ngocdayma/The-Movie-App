@@ -1,13 +1,13 @@
 package com.example.movieinfo.retrofit
 
-import com.example.movieinfo.`interface`.TMDbApi
+import com.example.movieinfo.`interface`.MovieApi
+import com.example.movieinfo.util.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "https://api.themoviedb.org/3/"
 
     private val retrofit by lazy {
         val logger = HttpLoggingInterceptor().apply {
@@ -19,13 +19,13 @@ object RetrofitClient {
             .build()
 
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(Constants.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-    val api: TMDbApi by lazy {
-        retrofit.create(TMDbApi::class.java)
+    val api: MovieApi by lazy {
+        retrofit.create(MovieApi::class.java)
     }
 }

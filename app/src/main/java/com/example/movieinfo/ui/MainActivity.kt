@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.movieinfo.R
 import com.example.movieinfo.databinding.ActivityMainBinding
+import com.example.movieinfo.ui.fragments.HomeFragment
+import com.example.movieinfo.ui.fragments.SearchFragment
+import com.example.movieinfo.ui.fragments.WatchlistFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val homeFragment = HomeFragment()
     private val searchFragment = SearchFragment()
-    private val watchlistFragment = WatchListFragment()
+    private val watchlistFragment = WatchlistFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
