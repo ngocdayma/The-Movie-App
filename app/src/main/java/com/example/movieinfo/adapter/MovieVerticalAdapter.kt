@@ -34,7 +34,7 @@ class MovieVerticalAdapter(
 
             Glide.with(itemView.context)
                 .load(Constants.IMAGE_BASE_URL + movie.poster_path)
-                .placeholder(R.drawable.ic_loading)
+                .placeholder(R.drawable.ic_no_image)
                 .into(ivPoster)
 
             itemView.setOnClickListener { onItemClick(movie) }
