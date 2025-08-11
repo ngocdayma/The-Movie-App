@@ -1,123 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    android:padding="0dp">
+    android:background="@color/background">
 
-    <LinearLayout
+    <!-- Nội dung cuộn -->
+    <ScrollView
+        android:id="@+id/scrollContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <CheckBox
-            android:id="@+id/checkboxWatchlist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:button="@drawable/selector_cb_add_list"
-            android:checked="false" />
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/imagePoster"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:background="@drawable/rounded_corners"
-                android:scaleType="fitCenter"
-                android:contentDescription="Poster" />
-
-            <TextView
-                android:id="@+id/textRating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="8dp"
-                android:padding="6dp"
-                android:text="8.5"
-                android:drawableStart="@drawable/ic_star"
-                android:textColor="#FF5722"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/poppins_semibold"
-                android:background="@drawable/bg_rating_box"
-                android:drawablePadding="6dp"/>
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/textTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="Movie Title"
-            android:padding="16dp"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+        android:layout_height="match_parent"
+        android:padding="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
+            android:orientation="vertical">
 
-            android:layout_marginTop="8dp">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imagePoster"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/rounded_corners"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Poster" />
+
+                <TextView
+                    android:id="@+id/textRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="8dp"
+                    android:padding="6dp"
+                    android:text="8.5"
+                    android:drawableStart="@drawable/ic_star"
+                    android:textColor="#FF5722"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:background="@drawable/bg_rating_box"
+                    android:drawablePadding="6dp"/>
+            </FrameLayout>
 
             <TextView
-                android:id="@+id/textReleaseDate"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="2025-01-01"
-                android:fontFamily="@font/poppins"
-                android:textColor="#AAAAAA"
-                android:textSize="14sp" />
-
-<!--            <TextView-->
-<!--                android:id="@+id/textRating"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="★ 7.8"-->
-<!--                android:textColor="#FFEB3B"-->
-<!--                android:textSize="14sp"-->
-<!--                android:layout_marginStart="16dp" />-->
-
-            <TextView
-                android:id="@+id/textDuration"
-                android:layout_width="wrap_content"
+                android:id="@+id/textTitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="120m"
-                android:textColor="#AAAAAA"
-                android:fontFamily="@font/poppins"
-                android:textSize="14sp"
-                android:layout_marginStart="16dp"/>
-            <TextView
-                android:id="@+id/textGenre"
-                android:layout_width="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Movie Title"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Action, Adventure, Drama"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/textReleaseDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="2025-01-01"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="#AAAAAA"
+                    android:textSize="14sp"
+                    android:drawableStart="@drawable/ic_calendar"
+                    android:drawablePadding="6dp" />
+
+                <TextView
+                    android:id="@+id/textDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="120m"
+                    android:textColor="#AAAAAA"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="14sp"
+                    android:layout_marginStart="16dp"
+                    android:drawableStart="@drawable/ic_clock"
+                    android:drawablePadding="6dp" />
+
+                <TextView
+                    android:id="@+id/textGenre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Action, Adventure, Drama"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="#AAAAAA"
+                    android:textSize="14sp"
+                    android:layout_marginStart="16dp"
+                    android:drawableStart="@drawable/ic_ticket"
+                    android:drawablePadding="6dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textOverview"
+                android:layout_width="match_parent"
+                android:padding="16dp"
+                android:layout_height="wrap_content"
+                android:text="Movie description goes here..."
+                android:textColor="#DDDDDD"
+                android:textSize="16sp"
                 android:fontFamily="@font/poppins"
-                android:textColor="#AAAAAA"
-                android:textSize="14sp"
-                android:layout_marginStart="16dp"/>
+                android:layout_marginTop="12dp" />
+
         </LinearLayout>
+    </ScrollView>
 
-        <TextView
-            android:id="@+id/textOverview"
-            android:layout_width="match_parent"
-            android:padding="16dp"
+    <!-- Checkbox lưu phim luôn cố định -->
+    <CheckBox
+        android:id="@+id/checkboxWatchlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:button="@drawable/selector_cb_add_list"
+        android:checked="false"
+        android:backgroundTint="@android:color/transparent" />
 
-            android:layout_height="wrap_content"
-            android:text="Movie description goes here..."
-            android:textColor="#DDDDDD"
-            android:textSize="16sp"
-            android:fontFamily="@font/poppins"
-            android:layout_marginTop="12dp" />
-
-    </LinearLayout>
-</ScrollView>
+</RelativeLayout>

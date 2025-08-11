@@ -14,6 +14,7 @@ import com.example.movieinfo.retrofit.RetrofitClient
 import com.example.movieinfo.viewmodel.MovieViewModel
 import com.example.movieinfo.viewmodel.MovieViewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.movieinfo.R
 import com.example.movieinfo.models.Movie
 import com.example.movieinfo.ui.DetailActivity
 import com.example.movieinfo.util.Constants
@@ -24,12 +25,10 @@ class HomeFragment : Fragment() {
 
     private lateinit var viewModel: MovieViewModel
 
-//    private lateinit var featuredAdapter: FeaturedMovieAdapter
     private lateinit var popularAdapter: MovieHorizontalAdapter
     private lateinit var nowPlayingAdapter: MovieHorizontalAdapter
     private lateinit var topRatedAdapter: MovieHorizontalAdapter
     private lateinit var upcomingAdapter: MovieHorizontalAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,19 +41,27 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // ViewModel setup
         val repository = MovieRepository(RetrofitClient.api)
         val factory = MovieViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, factory)[MovieViewModel::class.java]
-
-        // Gọi API
-        viewModel.fetchPopularMovies(Constants.API_KEY)
-        viewModel.fetchNowPlayingMovies(Constants.API_KEY)
-        viewModel.fetchTopRatedMovies(Constants.API_KEY)
-        viewModel.fetchUpcomingMovies(Constants.API_KEY)
+        // Gắn với Activity thay vì Fragment → giữ dữ liệu khi đổi tab
+        viewModel = ViewModelProvider(requireActivity(), factory)[MovieViewModel::class.java]
 
         setupRecyclerViews()
         observeData()
+        binding.etSearch.setOnEditorActionListener { _, _, _ ->
+            val query = binding.etSearch.text.toString().trim()
+            if (query.isNotEmpty()) {
+                navigateToSearch(query)
+            }
+            true
+        }
+        // Chỉ fetch lần đầu
+        if (viewModel.popularMovies.value.isNullOrEmpty()) {
+            viewModel.fetchPopularMovies(Constants.API_KEY)
+            viewModel.fetchNowPlayingMovies(Constants.API_KEY)
+            viewModel.fetchTopRatedMovies(Constants.API_KEY)
+            viewModel.fetchUpcomingMovies(Constants.API_KEY)
+        }
     }
 
     private fun setupRecyclerViews() {
@@ -63,29 +70,25 @@ class HomeFragment : Fragment() {
             intent.putExtra("movie_id", movie.id)
             startActivity(intent)
         }
-//        featuredAdapter = FeaturedMovieAdapter(emptyList()) { movie ->
-//            // TODO: xử lý click vào phim (nếu muốn)
-//        }
-//
-//        binding.rvFeaturedMovies.layoutManager =
-//            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-//
-//        binding.rvFeaturedMovies.adapter = featuredAdapter
 
         popularAdapter = MovieHorizontalAdapter(onMovieClick)
-        binding.rvPopular.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvPopular.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvPopular.adapter = popularAdapter
 
         nowPlayingAdapter = MovieHorizontalAdapter(onMovieClick)
-        binding.rvNowPlaying.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvNowPlaying.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvNowPlaying.adapter = nowPlayingAdapter
 
         topRatedAdapter = MovieHorizontalAdapter(onMovieClick)
-        binding.rvTopRated.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvTopRated.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvTopRated.adapter = topRatedAdapter
 
         upcomingAdapter = MovieHorizontalAdapter(onMovieClick)
-        binding.rvUpcoming.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvUpcoming.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvUpcoming.adapter = upcomingAdapter
     }
 
@@ -102,6 +105,20 @@ class HomeFragment : Fragment() {
         viewModel.upcomingMovies.observe(viewLifecycleOwner) {
             upcomingAdapter.submitList(it)
         }
+    }
+
+    private fun navigateToSearch(query: String) {
+        val bundle = Bundle().apply {
+            putString("search_query", query)
+        }
+        val searchFragment = SearchFragment().apply {
+            arguments = bundle
+        }
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, searchFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun onDestroyView() {
