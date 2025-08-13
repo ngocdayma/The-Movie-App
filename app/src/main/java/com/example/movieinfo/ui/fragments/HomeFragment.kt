@@ -7,17 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.movieinfo.adapter.MovieHorizontalAdapter
-import com.example.movieinfo.databinding.FragmentHomeBinding
-import com.example.movieinfo.repository.MovieRepository
-import com.example.movieinfo.retrofit.RetrofitClient
-import com.example.movieinfo.viewmodel.MovieViewModel
-import com.example.movieinfo.viewmodel.MovieViewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieinfo.R
+import com.example.movieinfo.adapter.MovieHorizontalAdapter
+import com.example.movieinfo.databinding.FragmentHomeBinding
 import com.example.movieinfo.models.Movie
+import com.example.movieinfo.repository.MovieRepository
+import com.example.movieinfo.retrofit.RetrofitClient
 import com.example.movieinfo.ui.DetailActivity
 import com.example.movieinfo.util.Constants
+import com.example.movieinfo.viewmodel.MovieViewModel
+import com.example.movieinfo.viewmodel.MovieViewModelFactory
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -43,11 +43,12 @@ class HomeFragment : Fragment() {
 
         val repository = MovieRepository(RetrofitClient.api)
         val factory = MovieViewModelFactory(repository)
-        // Gắn với Activity thay vì Fragment → giữ dữ liệu khi đổi tab
         viewModel = ViewModelProvider(requireActivity(), factory)[MovieViewModel::class.java]
 
         setupRecyclerViews()
         observeData()
+
+        // Chuyển sang SearchFragment khi nhấn Enter
         binding.etSearch.setOnEditorActionListener { _, _, _ ->
             val query = binding.etSearch.text.toString().trim()
             if (query.isNotEmpty()) {
@@ -55,8 +56,10 @@ class HomeFragment : Fragment() {
             }
             true
         }
-        // Chỉ fetch lần đầu
+
+        // Nếu chưa có dữ liệu thì mới load
         if (viewModel.popularMovies.value.isNullOrEmpty()) {
+            showLoading(true)
             viewModel.fetchPopularMovies(Constants.API_KEY)
             viewModel.fetchNowPlayingMovies(Constants.API_KEY)
             viewModel.fetchTopRatedMovies(Constants.API_KEY)
@@ -95,15 +98,19 @@ class HomeFragment : Fragment() {
     private fun observeData() {
         viewModel.popularMovies.observe(viewLifecycleOwner) {
             popularAdapter.submitList(it)
+            hideLoadingIfDataLoaded()
         }
         viewModel.nowPlayingMovies.observe(viewLifecycleOwner) {
             nowPlayingAdapter.submitList(it)
+            hideLoadingIfDataLoaded()
         }
         viewModel.topRatedMovies.observe(viewLifecycleOwner) {
             topRatedAdapter.submitList(it)
+            hideLoadingIfDataLoaded()
         }
         viewModel.upcomingMovies.observe(viewLifecycleOwner) {
             upcomingAdapter.submitList(it)
+            hideLoadingIfDataLoaded()
         }
     }
 
@@ -119,6 +126,29 @@ class HomeFragment : Fragment() {
             .replace(R.id.fragment_container, searchFragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    private fun showLoading(show: Boolean) {
+        if (show) {
+            binding.loadingLayout.animate().alpha(1f).setDuration(300).withStartAction {
+                binding.loadingLayout.visibility = View.VISIBLE
+            }
+        } else {
+            binding.loadingLayout.animate().alpha(0f).setDuration(300).withEndAction {
+                binding.loadingLayout.visibility = View.GONE
+            }
+        }
+    }
+
+
+    private fun hideLoadingIfDataLoaded() {
+        if (!viewModel.popularMovies.value.isNullOrEmpty()
+            && !viewModel.nowPlayingMovies.value.isNullOrEmpty()
+            && !viewModel.topRatedMovies.value.isNullOrEmpty()
+            && !viewModel.upcomingMovies.value.isNullOrEmpty()
+        ) {
+            showLoading(false)
+        }
     }
 
     override fun onDestroyView() {

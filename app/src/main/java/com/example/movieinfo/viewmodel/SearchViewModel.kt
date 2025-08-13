@@ -35,13 +35,10 @@ class SearchViewModel(private val repository: MovieRepository) : ViewModel() {
                     MovieDetail(
                         id = it.id,
                         title = it.title ?: "",
-                        overview = it.overview ?: "",
                         poster_path = it.poster_path,
                         backdrop_path = it.backdrop_path,
                         release_date = it.release_date ?: "",
-                        runtime = null, // search không có
-                        genres = emptyList(), // search không có
-                        vote_average = it.vote_average ?: 0f,
+                        vote_average = (it.vote_average ?: 0.0).toFloat(),
                         tagline = null
                     )
                 }
@@ -52,4 +49,5 @@ class SearchViewModel(private val repository: MovieRepository) : ViewModel() {
             }
         }
     }
+
 }

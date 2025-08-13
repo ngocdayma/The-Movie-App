@@ -96,6 +96,7 @@
                     android:text="Action, Adventure, Drama"
                     android:fontFamily="@font/poppins"
                     android:textColor="#AAAAAA"
+                    android:maxLines="1"
                     android:textSize="14sp"
                     android:layout_marginStart="16dp"
                     android:drawableStart="@drawable/ic_ticket"
@@ -116,11 +117,10 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Checkbox lưu phim luôn cố định -->
     <CheckBox
         android:id="@+id/checkboxWatchlist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
