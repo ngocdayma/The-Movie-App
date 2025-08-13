@@ -113,6 +113,36 @@
                 android:textSize="16sp"
                 android:fontFamily="@font/poppins"
                 android:layout_marginTop="12dp" />
+            <TextView
+                android:id="@+id/textCastLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cast"
+                android:textColor="@color/white"
+                android:textSize="21sp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+            <TextView
+                android:id="@+id/textReviewsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reviews"
+                android:textColor="@color/white"
+                android:textSize="21sp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvReviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </ScrollView>
