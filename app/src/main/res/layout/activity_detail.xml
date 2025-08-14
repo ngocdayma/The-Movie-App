@@ -123,6 +123,17 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp" />
 
+            <TextView
+                android:id="@+id/tvNoCast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No cast information available"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:visibility="gone" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCast"
                 android:layout_width="match_parent"
@@ -138,6 +149,17 @@
                 android:textSize="21sp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp" />
+
+            <TextView
+                android:id="@+id/tvNoReview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="This movie doesn't have any reviews yet."
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvReviews"

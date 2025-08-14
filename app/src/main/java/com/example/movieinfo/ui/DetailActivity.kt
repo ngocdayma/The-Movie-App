@@ -2,6 +2,7 @@ package com.example.movieinfo.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
@@ -40,6 +41,9 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var castAdapter: CastAdapter
     private lateinit var reviewAdapter: ReviewAdapter
 
+    private lateinit var tvNoCast: TextView
+    private lateinit var tvNoReview: TextView
+
     private var movieId: Int = -1
 
     private lateinit var viewModel: DetailViewModel
@@ -69,6 +73,8 @@ class DetailActivity : AppCompatActivity() {
         tvGenre = findViewById(R.id.textGenre)
         rvCast = findViewById(R.id.rvCast)
         rvReviews = findViewById(R.id.rvReviews)
+        tvNoCast = findViewById(R.id.tvNoCast)
+        tvNoReview = findViewById(R.id.tvNoReview)
 
         // Setup RecyclerView
         castAdapter = CastAdapter(emptyList())
@@ -106,7 +112,6 @@ class DetailActivity : AppCompatActivity() {
         }
 
         loadExtraData(movieId)
-
         setupWatchlist()
     }
 
@@ -114,12 +119,31 @@ class DetailActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val credits = repository.getMovieCredits(Constants.API_KEY, movieId)
-                castAdapter.updateData(credits.cast)
+                if (credits.cast.isEmpty()) {
+                    tvNoCast.visibility = View.VISIBLE
+                    rvCast.visibility = View.GONE
+                } else {
+                    tvNoCast.visibility = View.GONE
+                    rvCast.visibility = View.VISIBLE
+                    castAdapter.updateData(credits.cast)
+                }
 
                 val reviews = repository.getMovieReviews(Constants.API_KEY, movieId)
-                reviewAdapter.updateData(reviews.results)
+                if (reviews.results.isEmpty()) {
+                    tvNoReview.visibility = View.VISIBLE
+                    rvReviews.visibility = View.GONE
+                } else {
+                    tvNoReview.visibility = View.GONE
+                    rvReviews.visibility = View.VISIBLE
+                    reviewAdapter.updateData(reviews.results)
+                }
+
             } catch (e: Exception) {
                 Log.e("DetailActivity", "Error loading extra data", e)
+                tvNoCast.visibility = View.VISIBLE
+                tvNoReview.visibility = View.VISIBLE
+                rvCast.visibility = View.GONE
+                rvReviews.visibility = View.GONE
             }
         }
     }

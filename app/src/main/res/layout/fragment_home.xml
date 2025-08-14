@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -59,21 +57,38 @@
             android:fillViewport="true"
             android:padding="16dp">
 
-            <!-- Toàn bộ danh sách phim như trước -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <!-- Popular -->
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Popular"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:id="@+id/tvPopularTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Popular"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/poppins_semibold"/>
+
+                    <TextView
+                        android:id="@+id/btnSeeMorePopular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="See More"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"
+                        android:padding="4dp"/>
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvPopular"
@@ -82,15 +97,34 @@
                     android:layout_marginTop="8dp"
                     android:overScrollMode="never" />
 
+
                 <!-- Now Playing -->
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="Now Playing"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:id="@+id/tvNowPlayingTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Now Playing"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/poppins_semibold"/>
+
+                    <TextView
+                        android:id="@+id/btnSeeMoreNowPlaying"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="See More"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"
+                        android:padding="4dp"/>
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvNowPlaying"
@@ -100,14 +134,32 @@
                     android:overScrollMode="never" />
 
                 <!-- Top Rated -->
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Top Rated"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:id="@+id/tvTopRateTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Popular"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/poppins_semibold"/>
+
+                    <TextView
+                        android:id="@+id/btnSeeMoreTopRate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="See More"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"
+                        android:padding="4dp"/>
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvTopRated"
@@ -117,14 +169,32 @@
                     android:overScrollMode="never" />
 
                 <!-- Upcoming -->
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Upcoming"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:textSize="18sp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:id="@+id/tvUpComingTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Up Coming"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/poppins_semibold"/>
+
+                    <TextView
+                        android:id="@+id/btnSeeMoreUpComing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="See More"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"
+                        android:padding="4dp"/>
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvUpcoming"
