@@ -15,6 +15,7 @@ import com.example.movieinfo.repository.MovieRepository
 import com.example.movieinfo.retrofit.RetrofitClient
 import com.example.movieinfo.ui.DetailActivity
 import com.example.movieinfo.util.WatchlistManager
+import com.example.movieinfo.viewmodel.Resource
 import com.example.movieinfo.viewmodel.WatchlistViewModel
 import com.example.movieinfo.viewmodel.WatchlistViewModelFactory
 
@@ -46,14 +47,27 @@ class WatchlistFragment : Fragment() {
 
         setupRecyclerView()
 
-        viewModel.movies.observe(viewLifecycleOwner) { list ->
-            adapter.submitList(list)
-            if (list.isEmpty()) {
-                Toast.makeText(requireContext(), "Watchlist is empty", Toast.LENGTH_SHORT).show()
+        viewModel.movies.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is Resource.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is Resource.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    adapter.submitList(state.data)
+                    if (state.data.isEmpty()) {
+                        Toast.makeText(requireContext(), "Watchlist is empty", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                is Resource.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
         if (viewModel.movies.value == null) {
+            binding.progressBar.visibility = View.VISIBLE
             viewModel.loadWatchlist(requireContext())
         }
     }
@@ -61,6 +75,7 @@ class WatchlistFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         if (WatchlistManager.hasChanged) {
+            binding.progressBar.visibility = View.VISIBLE
             viewModel.loadWatchlist(requireContext())
             WatchlistManager.hasChanged = false
         }

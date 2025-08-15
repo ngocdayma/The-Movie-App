@@ -11,7 +11,6 @@ import com.example.movieinfo.repository.MovieRepository
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-
 class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
 
     private val _popularMovies = MutableLiveData<List<Movie>>()
@@ -37,25 +36,25 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
 
     fun fetchPopularMovies(apiKey: String) {
         viewModelScope.launch {
-            _popularMovies.value = repository.getPopularMovies(apiKey).results
+            _popularMovies.value = repository.getPopularMovies(apiKey).results.take(10)
         }
     }
 
     fun fetchNowPlayingMovies(apiKey: String) {
         viewModelScope.launch {
-            _nowPlayingMovies.value = repository.getNowPlayingMovies(apiKey).results
+            _nowPlayingMovies.value = repository.getNowPlayingMovies(apiKey).results.take(10)
         }
     }
 
     fun fetchTopRatedMovies(apiKey: String) {
         viewModelScope.launch {
-            _topRatedMovies.value = repository.getTopRatedMovies(apiKey).results
+            _topRatedMovies.value = repository.getTopRatedMovies(apiKey).results.take(10)
         }
     }
 
     fun fetchUpcomingMovies(apiKey: String) {
         viewModelScope.launch {
-            _upcomingMovies.value = repository.getUpcomingMovies(apiKey).results
+            _upcomingMovies.value = repository.getUpcomingMovies(apiKey).results.take(10)
         }
     }
 

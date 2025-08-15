@@ -15,7 +15,7 @@ interface MovieApi {
     suspend fun getPopularMovies(
         @Query("api_key") apiKey: String,
         @Query("language") language: String = "en-US",
-        @Query("page") page: Int = 1
+        @Query("page") page: Int
     ): MovieResponse
 
     // Now Playing Movies
@@ -23,7 +23,7 @@ interface MovieApi {
     suspend fun getNowPlayingMovies(
         @Query("api_key") apiKey: String,
         @Query("language") language: String = "en-US",
-        @Query("page") page: Int = 1
+        @Query("page") page: Int
     ): MovieResponse
 
     // Top Rated Movies
@@ -31,7 +31,7 @@ interface MovieApi {
     suspend fun getTopRatedMovies(
         @Query("api_key") apiKey: String,
         @Query("language") language: String = "en-US",
-        @Query("page") page: Int = 1
+        @Query("page") page: Int
     ): MovieResponse
 
     // Upcoming Movies
@@ -39,7 +39,7 @@ interface MovieApi {
     suspend fun getUpcomingMovies(
         @Query("api_key") apiKey: String,
         @Query("language") language: String = "en-US",
-        @Query("page") page: Int = 1
+        @Query("page") page: Int
     ): MovieResponse
 
     // Movie Detail
@@ -71,4 +71,5 @@ interface MovieApi {
         @Query("api_key") apiKey: String,
         @Query("query") query: String
     ): MovieResponse
+
 }

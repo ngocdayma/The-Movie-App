@@ -5,10 +5,10 @@ import android.util.Log
 import android.view.View
 import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,8 +20,7 @@ import com.example.movieinfo.repository.MovieRepository
 import com.example.movieinfo.retrofit.RetrofitClient
 import com.example.movieinfo.util.Constants
 import com.example.movieinfo.util.WatchlistManager
-import com.example.movieinfo.viewmodel.DetailViewModel
-import com.example.movieinfo.viewmodel.DetailViewModelFactory
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -43,12 +42,10 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var tvNoCast: TextView
     private lateinit var tvNoReview: TextView
+    private lateinit var progressBar: ProgressBar
 
     private var movieId: Int = -1
-
-    private lateinit var viewModel: DetailViewModel
     private val repository by lazy { MovieRepository(RetrofitClient.api) }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +72,7 @@ class DetailActivity : AppCompatActivity() {
         rvReviews = findViewById(R.id.rvReviews)
         tvNoCast = findViewById(R.id.tvNoCast)
         tvNoReview = findViewById(R.id.tvNoReview)
+        progressBar = findViewById(R.id.progressBarLoading)
 
         // Setup RecyclerView
         castAdapter = CastAdapter(emptyList())
@@ -85,40 +83,37 @@ class DetailActivity : AppCompatActivity() {
         rvReviews.layoutManager = LinearLayoutManager(this)
         rvReviews.adapter = reviewAdapter
 
-        // Setup ViewModel
-        val repository = MovieRepository(RetrofitClient.api)
-        val factory = DetailViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
-
-        // Gọi API
-        viewModel.fetchMovieDetail(movieId, Constants.API_KEY)
-
-        // Quan sát dữ liệu
-        viewModel.movieDetail.observe(this) { detail ->
-            tvTitle.text = detail.title
-            tvReleaseDate.text = detail.release_date
-            tvRating.text = String.format(Locale.US, " %.1f", detail.vote_average)
-            tvOverview.text = detail.overview
-            tvDuration.text = "${detail.runtime}min"
-            tvGenre.text = detail.genres.joinToString { it.name }
-
-            val fullUrl = Constants.IMAGE_BASE_URL + detail.poster_path
-
-            Glide.with(this)
-                .load(fullUrl)
-                .into(ivPoster)
-            Log.d("ImageURL", fullUrl)
-
-        }
-
-        loadExtraData(movieId)
-        setupWatchlist()
+        // Bắt đầu tải tất cả dữ liệu
+        loadAllData(movieId)
     }
 
-    private fun loadExtraData(movieId: Int) {
+    private fun loadAllData(movieId: Int) {
         lifecycleScope.launch {
+            showLoading(true)
             try {
-                val credits = repository.getMovieCredits(Constants.API_KEY, movieId)
+                // Chạy song song 3 API
+                val detailDeferred = async { repository.getMovieDetail(movieId, Constants.API_KEY) }
+                val creditsDeferred = async { repository.getMovieCredits(Constants.API_KEY, movieId) }
+                val reviewsDeferred = async { repository.getMovieReviews(Constants.API_KEY, movieId) }
+
+                val detail = detailDeferred.await()
+                val credits = creditsDeferred.await()
+                val reviews = reviewsDeferred.await()
+
+                // Gán dữ liệu movie detail
+                tvTitle.text = detail.title
+                tvReleaseDate.text = detail.release_date
+                tvRating.text = String.format(Locale.US, "%.1f", detail.vote_average)
+                tvOverview.text = detail.overview
+                tvDuration.text = "${detail.runtime}min"
+                tvGenre.text = detail.genres.joinToString { it.name }
+                Glide.with(this@DetailActivity)
+                    .load(Constants.IMAGE_BASE_URL + detail.poster_path)
+                    .placeholder(R.drawable.img_loading)
+                    .error(R.drawable.ic_launcher_background)
+                    .into(ivPoster)
+
+                // Gán cast
                 if (credits.cast.isEmpty()) {
                     tvNoCast.visibility = View.VISIBLE
                     rvCast.visibility = View.GONE
@@ -128,7 +123,7 @@ class DetailActivity : AppCompatActivity() {
                     castAdapter.updateData(credits.cast)
                 }
 
-                val reviews = repository.getMovieReviews(Constants.API_KEY, movieId)
+                // Gán reviews
                 if (reviews.results.isEmpty()) {
                     tvNoReview.visibility = View.VISIBLE
                     rvReviews.visibility = View.GONE
@@ -138,19 +133,19 @@ class DetailActivity : AppCompatActivity() {
                     reviewAdapter.updateData(reviews.results)
                 }
 
+                setupWatchlist()
+
             } catch (e: Exception) {
-                Log.e("DetailActivity", "Error loading extra data", e)
-                tvNoCast.visibility = View.VISIBLE
-                tvNoReview.visibility = View.VISIBLE
-                rvCast.visibility = View.GONE
-                rvReviews.visibility = View.GONE
+                Log.e("DetailActivity", "Error loading data", e)
+                Toast.makeText(this@DetailActivity, "Lỗi tải dữ liệu", Toast.LENGTH_SHORT).show()
+            } finally {
+                showLoading(false)
             }
         }
     }
 
     private fun setupWatchlist() {
         cbWatchlist.isChecked = WatchlistManager.isInWatchlist(this, movieId)
-
         cbWatchlist.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 WatchlistManager.addToWatchlist(this, movieId)
@@ -158,5 +153,9 @@ class DetailActivity : AppCompatActivity() {
                 WatchlistManager.removeFromWatchlist(this, movieId)
             }
         }
+    }
+
+    private fun showLoading(show: Boolean) {
+        progressBar.visibility = if (show) View.VISIBLE else View.GONE
     }
 }

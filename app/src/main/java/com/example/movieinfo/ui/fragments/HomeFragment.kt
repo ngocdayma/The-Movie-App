@@ -1,10 +1,15 @@
 package com.example.movieinfo.ui.fragments
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,11 +64,16 @@ class HomeFragment : Fragment() {
 
         // Nếu chưa có dữ liệu thì mới load
         if (viewModel.popularMovies.value.isNullOrEmpty()) {
-            showLoading(true)
-            viewModel.fetchPopularMovies(Constants.API_KEY)
-            viewModel.fetchNowPlayingMovies(Constants.API_KEY)
-            viewModel.fetchTopRatedMovies(Constants.API_KEY)
-            viewModel.fetchUpcomingMovies(Constants.API_KEY)
+            if (!isNetworkAvailable(requireContext())) {
+                Toast.makeText(requireContext(), "No internet connection. Please check your network.", Toast.LENGTH_SHORT).show()
+                showLoading(false)
+            } else {
+                showLoading(true)
+                viewModel.fetchPopularMovies(Constants.API_KEY)
+                viewModel.fetchNowPlayingMovies(Constants.API_KEY)
+                viewModel.fetchTopRatedMovies(Constants.API_KEY)
+                viewModel.fetchUpcomingMovies(Constants.API_KEY)
+            }
         }
     }
 
@@ -74,25 +84,54 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
+        // Popular
         popularAdapter = MovieHorizontalAdapter(onMovieClick)
         binding.rvPopular.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvPopular.adapter = popularAdapter
+        binding.btnSeeMorePopular.setOnClickListener {
+            openSeeMoreFragment("popular")
+        }
 
+        // Now Playing
         nowPlayingAdapter = MovieHorizontalAdapter(onMovieClick)
         binding.rvNowPlaying.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvNowPlaying.adapter = nowPlayingAdapter
+        binding.btnSeeMoreNowPlaying.setOnClickListener {
+            openSeeMoreFragment("now_playing")
+        }
 
+        // Top Rated
         topRatedAdapter = MovieHorizontalAdapter(onMovieClick)
         binding.rvTopRated.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvTopRated.adapter = topRatedAdapter
+        binding.btnSeeMoreTopRate.setOnClickListener {
+            openSeeMoreFragment("top_rated")
+        }
 
+        // Upcoming
         upcomingAdapter = MovieHorizontalAdapter(onMovieClick)
         binding.rvUpcoming.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvUpcoming.adapter = upcomingAdapter
+        binding.btnSeeMoreUpComing.setOnClickListener {
+            openSeeMoreFragment("upcoming")
+        }
+    }
+
+    private fun openSeeMoreFragment(category: String) {
+        val bundle = Bundle().apply {
+            putString("category", category)
+        }
+        val seeMoreFragment = SeeMoreFragment().apply {
+            arguments = bundle
+        }
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, seeMoreFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun observeData() {
@@ -140,7 +179,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-
     private fun hideLoadingIfDataLoaded() {
         if (!viewModel.popularMovies.value.isNullOrEmpty()
             && !viewModel.nowPlayingMovies.value.isNullOrEmpty()
@@ -148,6 +186,23 @@ class HomeFragment : Fragment() {
             && !viewModel.upcomingMovies.value.isNullOrEmpty()
         ) {
             showLoading(false)
+        }
+    }
+
+    fun isNetworkAvailable(context: Context): Boolean {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network = cm.activeNetwork ?: return false
+            val capabilities = cm.getNetworkCapabilities(network) ?: return false
+            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+        } else {
+            @Suppress("DEPRECATION")
+            val networkInfo = cm.activeNetworkInfo
+            @Suppress("DEPRECATION")
+            networkInfo != null && networkInfo.isConnected
         }
     }
 

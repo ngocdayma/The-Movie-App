@@ -1,7 +1,6 @@
 package com.example.movieinfo.util
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.core.content.edit
 
 object WatchlistManager {
