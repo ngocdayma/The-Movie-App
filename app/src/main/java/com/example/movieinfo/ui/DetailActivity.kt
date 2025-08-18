@@ -108,7 +108,7 @@ class DetailActivity : AppCompatActivity() {
                 tvDuration.text = "${detail.runtime}min"
                 tvGenre.text = detail.genres.joinToString { it.name }
                 Glide.with(this@DetailActivity)
-                    .load(Constants.IMAGE_BASE_URL + detail.poster_path)
+                    .load(detail.backdropUrl)
                     .placeholder(R.drawable.img_loading)
                     .error(R.drawable.ic_launcher_background)
                     .into(ivPoster)

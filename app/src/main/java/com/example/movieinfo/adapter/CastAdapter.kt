@@ -17,7 +17,6 @@ class CastAdapter(private var castList: List<Cast>) :
     inner class CastViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val ivProfile: ImageView = view.findViewById(R.id.ivProfile)
         val tvName: TextView = view.findViewById(R.id.tvName)
-        val tvCharacter: TextView = view.findViewById(R.id.tvCharacter)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CastViewHolder {
@@ -29,7 +28,6 @@ class CastAdapter(private var castList: List<Cast>) :
     override fun onBindViewHolder(holder: CastViewHolder, position: Int) {
         val cast = castList[position]
         holder.tvName.text = cast.name
-        holder.tvCharacter.text = cast.character
         Glide.with(holder.itemView.context)
             .load("https://image.tmdb.org/t/p/w185${cast.profile_path}")
             .placeholder(R.drawable.img_loading)

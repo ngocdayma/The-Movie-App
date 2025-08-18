@@ -15,7 +15,6 @@ class SearchHistoryAdapter(
 
     inner class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvQuery: TextView = itemView.findViewById(R.id.tvQuery)
-        private val ivSearchIcon: ImageView = itemView.findViewById(R.id.ivSearchIcon)
 
         fun bind(query: String) {
             tvQuery.text = query

@@ -43,7 +43,7 @@ class MovieHorizontalAdapter(
         // Load ảnh poster
         Glide.with(holder.itemView.context)
             .load(Constants.IMAGE_BASE_URL + movie.poster_path)
-            .placeholder(R.drawable.img_loading)
+            .placeholder(R.drawable.img_logo)
             .into(holder.ivPoster)
 
         // Hiển thị vị trí top
