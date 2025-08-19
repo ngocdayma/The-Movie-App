@@ -174,18 +174,32 @@
                     android:text="Action, Adventure, Drama"
                     android:fontFamily="@font/poppins"
                     android:textColor="#AAAAAA"
-                    android:maxLines="1"
                     android:textSize="14sp"
                     android:layout_marginStart="16dp"
                     android:drawableStart="@drawable/ic_ticket"
-                    android:drawablePadding="6dp" />
+                    android:drawablePadding="6dp"
+                    android:singleLine="true"
+                    android:ellipsize="end" />
             </LinearLayout>
+
+            <Button
+                android:id="@+id/btnWatchTrailer"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="16dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="18sp"
+                android:background="@drawable/bg_trailer_button"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="@color/white"
+                android:text="Watch Trailer"/>
 
             <TextView
                 android:id="@+id/textOverviewLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="OverView"
+                android:fontFamily="@font/poppins_semibold"
                 android:textColor="@color/white"
                 android:textSize="21sp"
                 android:layout_marginStart="16dp"
@@ -207,6 +221,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cast"
+                android:fontFamily="@font/poppins_semibold"
                 android:textColor="@color/white"
                 android:textSize="21sp"
                 android:layout_marginStart="16dp"
@@ -217,6 +232,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="No cast information available"
+                android:fontFamily="@font/poppins"
                 android:textColor="@color/gray"
                 android:textSize="14sp"
                 android:gravity="center"
@@ -236,6 +252,7 @@
                 android:layout_height="wrap_content"
                 android:text="Reviews"
                 android:textColor="@color/white"
+                android:fontFamily="@font/poppins_semibold"
                 android:textSize="21sp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp" />
@@ -247,6 +264,7 @@
                 android:text="This movie doesn't have any reviews yet."
                 android:textColor="@color/gray"
                 android:textSize="14sp"
+                android:fontFamily="@font/poppins"
                 android:gravity="center"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -263,8 +281,8 @@
     <!-- ProgressBar ở giữa màn hình -->
     <ProgressBar
         android:id="@+id/progressBarLoading"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

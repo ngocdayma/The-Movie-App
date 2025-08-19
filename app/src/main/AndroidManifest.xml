@@ -24,6 +24,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.DetailActivity"/>
+        <activity
+            android:name=".ui.TrailerActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
 
         <meta-data
             android:name="preloaded_fonts"

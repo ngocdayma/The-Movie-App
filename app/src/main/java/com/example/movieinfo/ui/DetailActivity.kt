@@ -1,5 +1,6 @@
 package com.example.movieinfo.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -17,7 +18,6 @@ import com.bumptech.glide.Glide
 import com.example.movieinfo.R
 import com.example.movieinfo.adapter.CastAdapter
 import com.example.movieinfo.adapter.ReviewAdapter
-import com.example.movieinfo.databinding.FragmentSeemoreBinding
 import com.example.movieinfo.repository.MovieRepository
 import com.example.movieinfo.retrofit.RetrofitClient
 import com.example.movieinfo.util.Constants
@@ -37,6 +37,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var cbWatchlist: CheckBox
     private lateinit var tvDuration: TextView
     private lateinit var tvGenre: TextView
+    private lateinit var btnWatchTrailer: Button
 
     private lateinit var rvCast: RecyclerView
     private lateinit var rvReviews: RecyclerView
@@ -77,6 +78,7 @@ class DetailActivity : AppCompatActivity() {
         tvNoCast = findViewById(R.id.tvNoCast)
         tvNoReview = findViewById(R.id.tvNoReview)
         progressBar = findViewById(R.id.progressBarLoading)
+        btnWatchTrailer = findViewById(R.id.btnWatchTrailer)
 
         // Setup RecyclerView
         castAdapter = CastAdapter(emptyList())
@@ -100,14 +102,16 @@ class DetailActivity : AppCompatActivity() {
         lifecycleScope.launch {
             showLoading(true)
             try {
-                // Chạy song song 3 API
+                // Chạy song song 4 API
                 val detailDeferred = async { repository.getMovieDetail(movieId, Constants.API_KEY) }
                 val creditsDeferred = async { repository.getMovieCredits(Constants.API_KEY, movieId) }
                 val reviewsDeferred = async { repository.getMovieReviews(Constants.API_KEY, movieId) }
+                val videosDeferred = async { repository.getMovieVideos(movieId, Constants.API_KEY, "en-US") }
 
                 val detail = detailDeferred.await()
                 val credits = creditsDeferred.await()
                 val reviews = reviewsDeferred.await()
+                val videos = videosDeferred.await()
 
                 // Gán dữ liệu movie detail
                 tvTitle.text = detail.title
@@ -126,7 +130,6 @@ class DetailActivity : AppCompatActivity() {
                     .placeholder(R.drawable.img_logo)
                     .error(R.drawable.ic_launcher_background)
                     .into(ivPoster)
-
 
                 // Gán cast
                 if (credits.cast.isEmpty()) {
@@ -148,6 +151,18 @@ class DetailActivity : AppCompatActivity() {
                     reviewAdapter.updateData(reviews.results)
                 }
 
+                val trailer = videos.results.firstOrNull { it.type == "Trailer" && it.site == "YouTube" }
+
+                btnWatchTrailer.setOnClickListener {
+                    if (trailer != null) {
+                        val intent = Intent(this@DetailActivity, TrailerActivity::class.java)
+                        intent.putExtra("VIDEO_KEY", trailer.key)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(this@DetailActivity, "Không có trailer nào!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
                 setupWatchlist()
 
             } catch (e: Exception) {
@@ -158,6 +173,7 @@ class DetailActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun setupWatchlist() {
         cbWatchlist.isChecked = WatchlistManager.isInWatchlist(this, movieId)
@@ -171,6 +187,12 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun showLoading(show: Boolean) {
-        progressBar.visibility = if (show) View.VISIBLE else View.GONE
+        if (show) {
+            progressBar.visibility = View.VISIBLE
+            findViewById<View>(R.id.scrollContent).visibility = View.GONE
+        } else {
+            progressBar.visibility = View.GONE
+            findViewById<View>(R.id.scrollContent).visibility = View.VISIBLE
+        }
     }
 }

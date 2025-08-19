@@ -4,6 +4,7 @@ import com.example.movieinfo.models.CreditResponse
 import com.example.movieinfo.models.MovieDetail
 import com.example.movieinfo.models.MovieResponse
 import com.example.movieinfo.models.ReviewResponse
+import com.example.movieinfo.models.VideoResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -77,6 +78,6 @@ interface MovieApi {
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String,
         @Query("language") language: String = "en-US"
-    ): MovieResponse
+    ): VideoResponse
 
 }

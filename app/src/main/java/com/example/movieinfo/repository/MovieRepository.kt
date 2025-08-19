@@ -39,4 +39,6 @@ class MovieRepository(private val api: MovieApi) {
     suspend fun searchMovies(apiKey: String, query: String) =
         api.searchMovies(apiKey, query)
 
+    suspend fun getMovieVideos(movieId: Int, apiKey: String, language: String) =
+        api.getMovieVideos(movieId, apiKey, language)
 }
