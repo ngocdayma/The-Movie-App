@@ -1,34 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
 
+    <!-- HEADER -->
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/background"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Nút back -->
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_back"
+            android:contentDescription="Back"/>
+
+        <!-- Tiêu đề -->
+        <TextView
+            android:id="@+id/textHeaderTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Detail"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <!-- Nút Watchlist -->
+        <CheckBox
+            android:id="@+id/checkboxWatchlist"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:button="@drawable/selector_cb_add_list"
+            android:checked="false"
+            android:backgroundTint="@android:color/transparent"/>
+    </LinearLayout>
+
     <!-- Nội dung cuộn -->
     <ScrollView
         android:id="@+id/scrollContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="0dp">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/headerLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- BACKDROP -->
             <FrameLayout
+                android:id="@+id/backdropContainer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="200dp">
 
                 <ImageView
-                    android:id="@+id/imagePoster"
+                    android:id="@+id/imageBackdrop"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/rounded_corners"
+                    android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:contentDescription="Poster" />
+                    android:contentDescription="Backdrop" />
 
+                <!-- Rating box -->
                 <TextView
                     android:id="@+id/textRating"
                     android:layout_width="wrap_content"
@@ -46,25 +97,52 @@
                     android:drawablePadding="6dp"/>
             </FrameLayout>
 
-            <TextView
-                android:id="@+id/textTitle"
+            <!-- Poster + Title -->
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="-60dp"
                 android:paddingStart="16dp"
-                android:paddingTop="8dp"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Movie Title"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:paddingEnd="16dp">
 
+                <!-- Poster nhỏ đè lên backdrop -->
+                <ImageView
+                    android:id="@+id/imagePosterSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="180dp"
+                    android:scaleType="fitXY"
+                    android:background="@drawable/rounded_corners"
+                    android:contentDescription="Poster Small"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:clipToOutline="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:elevation="4dp"/>
+
+                <!-- Tên phim nằm bên phải poster nhỏ -->
+                <TextView
+                    android:id="@+id/textTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Movie Title"
+                    android:layout_marginTop="56dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="@id/imagePosterSmall"
+                    app:layout_constraintStart_toEndOf="@id/imagePosterSmall"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/imagePosterSmall"
+                    android:layout_marginStart="12dp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Giữ nguyên các phần còn lại -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingStart="16dp"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="16dp">
 
                 <TextView
                     android:id="@+id/textReleaseDate"
@@ -104,15 +182,26 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/textOverviewLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OverView"
+                android:textColor="@color/white"
+                android:textSize="21sp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp" />
+
+            <TextView
                 android:id="@+id/textOverview"
                 android:layout_width="match_parent"
-                android:padding="16dp"
+                android:paddingHorizontal="16dp"
                 android:layout_height="wrap_content"
                 android:text="Movie description goes here..."
                 android:textColor="#DDDDDD"
                 android:textSize="16sp"
                 android:fontFamily="@font/poppins"
                 android:layout_marginTop="12dp" />
+
             <TextView
                 android:id="@+id/textCastLabel"
                 android:layout_width="wrap_content"
@@ -138,7 +227,8 @@
                 android:id="@+id/rvCast"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" />
+                android:orientation="horizontal"
+                android:nestedScrollingEnabled="false"/>
 
             <TextView
                 android:id="@+id/textReviewsLabel"
@@ -164,29 +254,22 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvReviews"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"/>
         </LinearLayout>
     </ScrollView>
-
-    <CheckBox
-        android:id="@+id/checkboxWatchlist"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:button="@drawable/selector_cb_add_list"
-        android:checked="false"
-        android:backgroundTint="@android:color/transparent" />
 
     <!-- ProgressBar ở giữa màn hình -->
     <ProgressBar
         android:id="@+id/progressBarLoading"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_centerInParent="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:indeterminate="true"
         android:visibility="visible" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

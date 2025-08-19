@@ -3,6 +3,7 @@ package com.example.movieinfo.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.example.movieinfo.R
 import com.example.movieinfo.adapter.CastAdapter
 import com.example.movieinfo.adapter.ReviewAdapter
+import com.example.movieinfo.databinding.FragmentSeemoreBinding
 import com.example.movieinfo.repository.MovieRepository
 import com.example.movieinfo.retrofit.RetrofitClient
 import com.example.movieinfo.util.Constants
@@ -26,6 +28,7 @@ import java.util.Locale
 
 class DetailActivity : AppCompatActivity() {
 
+    private lateinit var ivBackDrop: ImageView
     private lateinit var ivPoster: ImageView
     private lateinit var tvTitle: TextView
     private lateinit var tvReleaseDate: TextView
@@ -60,7 +63,8 @@ class DetailActivity : AppCompatActivity() {
         }
 
         // Gắn view
-        ivPoster = findViewById(R.id.imagePoster)
+        ivBackDrop = findViewById(R.id.imageBackdrop)
+        ivPoster = findViewById(R.id.imagePosterSmall)
         tvTitle = findViewById(R.id.textTitle)
         tvReleaseDate = findViewById(R.id.textReleaseDate)
         tvRating = findViewById(R.id.textRating)
@@ -82,6 +86,11 @@ class DetailActivity : AppCompatActivity() {
         reviewAdapter = ReviewAdapter(emptyList())
         rvReviews.layoutManager = LinearLayoutManager(this)
         rvReviews.adapter = reviewAdapter
+
+        val btnBack: ImageView = findViewById(R.id.btnBack)
+        btnBack.setOnClickListener {
+            finish()
+        }
 
         // Bắt đầu tải tất cả dữ liệu
         loadAllData(movieId)
@@ -109,9 +118,15 @@ class DetailActivity : AppCompatActivity() {
                 tvGenre.text = detail.genres.joinToString { it.name }
                 Glide.with(this@DetailActivity)
                     .load(detail.backdropUrl)
-                    .placeholder(R.drawable.img_loading)
+                    .placeholder(R.drawable.img_logo)
+                    .error(R.drawable.ic_launcher_background)
+                    .into(ivBackDrop)
+                Glide.with(this@DetailActivity)
+                    .load(detail.posterUrl)
+                    .placeholder(R.drawable.img_logo)
                     .error(R.drawable.ic_launcher_background)
                     .into(ivPoster)
+
 
                 // Gán cast
                 if (credits.cast.isEmpty()) {

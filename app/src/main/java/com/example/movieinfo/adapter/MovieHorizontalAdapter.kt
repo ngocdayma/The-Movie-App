@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +18,6 @@ class MovieHorizontalAdapter(
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivPoster: ImageView = itemView.findViewById(R.id.ivPoster)
-        val tvRank: TextView = itemView.findViewById(R.id.tvRank)
 
         init {
             itemView.setOnClickListener {
@@ -46,8 +44,6 @@ class MovieHorizontalAdapter(
             .placeholder(R.drawable.img_logo)
             .into(holder.ivPoster)
 
-        // Hiển thị vị trí top
-        holder.tvRank.text = (position + 1).toString()
     }
 
     class MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {

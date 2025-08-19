@@ -25,9 +25,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="2dp"
             android:text="Category Title"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:fontFamily="@font/poppins_semibold" />
     </LinearLayout>
 

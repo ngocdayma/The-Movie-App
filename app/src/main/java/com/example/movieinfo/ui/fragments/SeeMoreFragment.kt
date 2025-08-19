@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieinfo.adapter.SeeMoreAdapter
 import com.example.movieinfo.databinding.FragmentSeemoreBinding
-import com.example.movieinfo.models.Movie
 import com.example.movieinfo.retrofit.RetrofitClient
 import com.example.movieinfo.ui.DetailActivity
 import com.example.movieinfo.util.Constants
@@ -55,7 +54,7 @@ class SeeMoreFragment : Fragment() {
 
         setupRecyclerView()
         setupUI()
-        loadMovies(1, false) // Load first page
+        loadMovies(1, false)
     }
 
     private fun setupRecyclerView() {
