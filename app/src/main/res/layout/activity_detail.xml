@@ -213,8 +213,9 @@
                 android:text="Movie description goes here..."
                 android:textColor="#DDDDDD"
                 android:textSize="16sp"
+                android:layout_marginHorizontal="4dp"
                 android:fontFamily="@font/poppins"
-                android:layout_marginTop="12dp" />
+                android:layout_marginTop="8dp" />
 
             <TextView
                 android:id="@+id/textCastLabel"

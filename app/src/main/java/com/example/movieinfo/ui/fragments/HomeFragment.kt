@@ -19,7 +19,7 @@ import com.example.movieinfo.databinding.FragmentHomeBinding
 import com.example.movieinfo.models.Movie
 import com.example.movieinfo.repository.MovieRepository
 import com.example.movieinfo.retrofit.RetrofitClient
-import com.example.movieinfo.ui.DetailActivity
+import com.example.movieinfo.ui.activities.DetailActivity
 import com.example.movieinfo.util.Constants
 import com.example.movieinfo.viewmodel.MovieViewModel
 import com.example.movieinfo.viewmodel.MovieViewModelFactory

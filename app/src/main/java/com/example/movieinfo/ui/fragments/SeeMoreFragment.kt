@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movieinfo.adapter.SeeMoreAdapter
 import com.example.movieinfo.databinding.FragmentSeemoreBinding
 import com.example.movieinfo.retrofit.RetrofitClient
-import com.example.movieinfo.ui.DetailActivity
+import com.example.movieinfo.ui.activities.DetailActivity
 import com.example.movieinfo.util.Constants
 import kotlinx.coroutines.launch
 

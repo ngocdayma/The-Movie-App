@@ -1,4 +1,4 @@
-package com.example.movieinfo.ui
+package com.example.movieinfo.ui.activities
 
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration

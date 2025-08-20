@@ -15,7 +15,7 @@ import com.example.movieinfo.adapter.SearchHistoryAdapter
 import com.example.movieinfo.databinding.FragmentSearchBinding
 import com.example.movieinfo.repository.MovieRepository
 import com.example.movieinfo.retrofit.RetrofitClient
-import com.example.movieinfo.ui.DetailActivity
+import com.example.movieinfo.ui.activities.DetailActivity
 import com.example.movieinfo.util.SearchHistoryManager
 import com.example.movieinfo.viewmodel.SearchViewModel
 import com.example.movieinfo.viewmodel.SearchViewModelFactory
@@ -52,11 +52,8 @@ class SearchFragment : Fragment() {
             historyAdapter.updateData(history)
 
             // Ẩn/hiện label và nút clear
-            if (history.isEmpty()) {
-                binding.layoutHistoryHeader.visibility = View.GONE
-            } else {
-                binding.layoutHistoryHeader.visibility = View.VISIBLE
-            }
+            binding.layoutHistoryHeader.visibility =
+                if (history.isEmpty()) View.GONE else View.VISIBLE
         }
 
         viewModel.movies.observe(viewLifecycleOwner) { list ->
@@ -75,8 +72,18 @@ class SearchFragment : Fragment() {
             val query = binding.etSearch.text.toString().trim()
             if (query.isNotEmpty()) {
                 viewModel.performSearch(requireContext(), query)
+                val imm = requireContext().getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+                imm.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
+                binding.etSearch.clearFocus()
             }
             true
+        }
+
+        // Nhận query từ HomeFragment (nếu có)
+        val queryFromHome = arguments?.getString("search_query")
+        if (!queryFromHome.isNullOrEmpty()) {
+            binding.etSearch.setText(queryFromHome)
+            viewModel.performSearch(requireContext(), queryFromHome)
         }
 
         // Xóa lịch sử
@@ -110,7 +117,6 @@ class SearchFragment : Fragment() {
         binding.rvSearchResults.layoutManager = LinearLayoutManager(requireContext())
         binding.rvSearchResults.adapter = resultsAdapter
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

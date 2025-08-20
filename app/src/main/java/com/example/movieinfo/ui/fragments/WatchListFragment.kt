@@ -13,7 +13,7 @@ import com.example.movieinfo.adapter.MovieVerticalAdapter
 import com.example.movieinfo.databinding.FragmentWatchlistBinding
 import com.example.movieinfo.repository.MovieRepository
 import com.example.movieinfo.retrofit.RetrofitClient
-import com.example.movieinfo.ui.DetailActivity
+import com.example.movieinfo.ui.activities.DetailActivity
 import com.example.movieinfo.util.WatchlistManager
 import com.example.movieinfo.viewmodel.Resource
 import com.example.movieinfo.viewmodel.WatchlistViewModel
