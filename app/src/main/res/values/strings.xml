@@ -4,5 +4,5 @@
     <string name="error_loading_movies">Error loading movies</string>
     <string name="no_movies_found">No movies found</string>
     <string name="default_web_client_id">73885136044-kat0kdkqa90nk91utsteqj0ghf3t2o29.apps.googleusercontent.com</string>
-    <string name="login_watchlist"><u>Login and make your own watchlist!</u></string>
+    <string name="login_watchlist"><u>Log in and make your own watchlist!</u></string>
 </resources>

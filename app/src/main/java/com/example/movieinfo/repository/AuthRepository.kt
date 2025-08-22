@@ -97,9 +97,9 @@ class AuthRepository {
     fun logout(): Result<Boolean> {
         return try {
             auth.signOut()
-            Result.success(true) // thành công
+            Result.success(true)
         } catch (e: Exception) {
-            Result.failure(e)    // thất bại (rất hiếm khi xảy ra)
+            Result.failure(e)
         }
     }
 
