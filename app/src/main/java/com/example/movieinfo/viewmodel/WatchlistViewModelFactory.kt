@@ -4,9 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.movieinfo.repository.MovieRepository
 
-class WatchlistViewModelFactory(
-    private val repository: MovieRepository
-) : ViewModelProvider.Factory {
+class WatchlistViewModelFactory(private val repository: MovieRepository) :
+    ViewModelProvider.Factory {
+
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(WatchlistViewModel::class.java)) {
             return WatchlistViewModel(repository) as T

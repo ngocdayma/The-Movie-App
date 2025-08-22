@@ -5,6 +5,7 @@ import com.example.movieinfo.models.CreditResponse
 import com.example.movieinfo.models.MovieDetail
 import com.example.movieinfo.models.MovieResponse
 import com.example.movieinfo.models.ReviewResponse
+import com.example.movieinfo.util.Constants
 
 class MovieRepository(private val api: MovieApi) {
 
@@ -41,4 +42,13 @@ class MovieRepository(private val api: MovieApi) {
 
     suspend fun getMovieVideos(movieId: Int, apiKey: String, language: String) =
         api.getMovieVideos(movieId, apiKey, language)
+
+    suspend fun getMovieDetail(id: String): MovieDetail? {
+        return try {
+            val movieId = id.toInt()
+            getMovieDetail(movieId, Constants.API_KEY)
+        } catch (e: Exception) {
+            null
+        }
+    }
 }

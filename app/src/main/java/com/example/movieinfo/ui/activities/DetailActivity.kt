@@ -120,12 +120,20 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setupWatchlist() {
+        val isLoggedIn = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser != null
+
         cbWatchlist.isChecked = WatchlistManager.isInWatchlist(this, movieId)
-        cbWatchlist.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                WatchlistManager.addToWatchlist(this, movieId)
+
+        cbWatchlist.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isLoggedIn) {
+                if (isChecked) {
+                    WatchlistManager.addToWatchlist(this, movieId)
+                } else {
+                    WatchlistManager.removeFromWatchlist(this, movieId)
+                }
             } else {
-                WatchlistManager.removeFromWatchlist(this, movieId)
+                buttonView.isChecked = !isChecked
+                Toast.makeText(this, "You need to log in to use this feature.", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -142,13 +150,13 @@ class DetailActivity : AppCompatActivity() {
         Glide.with(this)
             .load(detail.backdropUrl)
             .placeholder(R.drawable.img_logo)
-            .error(R.drawable.ic_launcher_background)
+            .error(R.drawable.img_logo)
             .into(ivBackDrop)
 
         Glide.with(this)
             .load(detail.posterUrl)
             .placeholder(R.drawable.img_logo)
-            .error(R.drawable.ic_launcher_background)
+            .error(R.drawable.img_logo)
             .into(ivPoster)
 
         // Cast

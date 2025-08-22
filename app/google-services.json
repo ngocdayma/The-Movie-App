@@ -12,7 +12,20 @@
           "package_name": "com.example.movieinfo.repository"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "73885136044-noh2rnr4qe3cukt1steautabsfq2vvcn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.movieinfo.repository",
+            "certificate_hash": "b2cfc3da68f38790255025382f4238b3d96d2972"
+          }
+        },
+        {
+          "client_id": "73885136044-kat0kdkqa90nk91utsteqj0ghf3t2o29.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDOK8esoUaX6WmVt5lvrNrofzJmLcLex6A"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "73885136044-kat0kdkqa90nk91utsteqj0ghf3t2o29.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

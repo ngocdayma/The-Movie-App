@@ -108,7 +108,7 @@
                 <!-- Poster nhỏ đè lên backdrop -->
                 <ImageView
                     android:id="@+id/imagePosterSmall"
-                    android:layout_width="wrap_content"
+                    android:layout_width="120dp"
                     android:layout_height="180dp"
                     android:scaleType="fitXY"
                     android:background="@drawable/rounded_corners"

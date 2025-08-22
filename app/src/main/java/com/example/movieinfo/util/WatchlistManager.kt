@@ -2,32 +2,41 @@ package com.example.movieinfo.util
 
 import android.content.Context
 import androidx.core.content.edit
+import com.example.movieinfo.repository.AuthRepository
 
 object WatchlistManager {
-    private const val PREF_NAME = "watchlist_prefs"
-    private const val KEY_WATCHLIST = "movie_ids"
 
     var hasChanged: Boolean = false
 
+    private fun getPrefs(context: Context, uid: String) =
+        context.getSharedPreferences("watchlist_prefs_$uid", Context.MODE_PRIVATE)
+
     fun addToWatchlist(context: Context, movieId: Int) {
-        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        val current = getWatchlist(context).toMutableSet()
+        val uid = AuthRepository().getCurrentUserId() ?: return
+        val prefs = getPrefs(context, uid)
+        val current = prefs.getStringSet("movie_ids", emptySet())?.toMutableSet() ?: mutableSetOf()
         current.add(movieId.toString())
-        prefs.edit() { putStringSet(KEY_WATCHLIST, current) }
+        prefs.edit { putStringSet("movie_ids", current) }
         hasChanged = true
     }
 
     fun removeFromWatchlist(context: Context, movieId: Int) {
-        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        val current = getWatchlist(context).toMutableSet()
+        val uid = AuthRepository().getCurrentUserId() ?: return
+        val prefs = getPrefs(context, uid)
+        val current = prefs.getStringSet("movie_ids", emptySet())?.toMutableSet() ?: mutableSetOf()
         current.remove(movieId.toString())
-        prefs.edit() { putStringSet(KEY_WATCHLIST, current) }
+        prefs.edit { putStringSet("movie_ids", current) }
         hasChanged = true
     }
 
     fun getWatchlist(context: Context): Set<String> {
-        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        return prefs.getStringSet(KEY_WATCHLIST, emptySet()) ?: emptySet()
+        val uid = AuthRepository().getCurrentUserId() ?: return emptySet()
+        val prefs = getPrefs(context, uid)
+        return prefs.getStringSet("movie_ids", emptySet()) ?: emptySet()
+    }
+
+    fun getWatchlistCount(context: Context): Int {
+        return getWatchlist(context).size
     }
 
     fun isInWatchlist(context: Context, movieId: Int): Boolean {
