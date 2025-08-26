@@ -1,18 +1,24 @@
 package com.example.movieinfo.ui.activities
 
+import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AlphaAnimation
+import android.webkit.WebChromeClient
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.example.movieinfo.R
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
+@Suppress("DEPRECATION")
 class TrailerActivity : AppCompatActivity() {
 
+    private lateinit var webView: WebView
+    private lateinit var loadingOverlay: View
+
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trailer)
@@ -21,13 +27,19 @@ class TrailerActivity : AppCompatActivity() {
 
         val videoKey = intent.getStringExtra("VIDEO_KEY") ?: return
 
-        val youTubePlayerView = findViewById<YouTubePlayerView>(R.id.youtubePlayerView)
-        val loadingOverlay = findViewById<View>(R.id.loadingOverlay)
+        webView = findViewById(R.id.webView)
+        loadingOverlay = findViewById(R.id.loadingOverlay)
 
-        lifecycle.addObserver(youTubePlayerView)
+        val webSettings: WebSettings = webView.settings
+        webSettings.javaScriptEnabled = true
+        webSettings.domStorageEnabled = true
+        webSettings.mediaPlaybackRequiresUserGesture = false
 
-        youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-            override fun onReady(youTubePlayer: YouTubePlayer) {
+        webView.webChromeClient = WebChromeClient()
+        webView.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+
                 val fadeOut = AlphaAnimation(1f, 0f).apply {
                     duration = 500
                     fillAfter = true
@@ -37,13 +49,18 @@ class TrailerActivity : AppCompatActivity() {
                 loadingOverlay.postDelayed({
                     loadingOverlay.visibility = View.GONE
                 }, 500)
-
-                youTubePlayer.loadVideo(videoKey, 0f)
             }
-        })
+        }
+
+        val videoUrl = "https://www.youtube.com/embed/$videoKey?autoplay=1&modestbranding=1&rel=0"
+        webView.loadUrl(videoUrl)
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
+    override fun onBackPressed() {
+        if (webView.canGoBack()) {
+            webView.goBack()
+        } else {
+            super.onBackPressed()
+        }
     }
 }
