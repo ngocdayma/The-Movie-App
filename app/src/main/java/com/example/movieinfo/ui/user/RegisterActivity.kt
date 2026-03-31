@@ -1,4 +1,4 @@
-package com.example.movieinfo.ui.activities
+package com.example.movieinfo.ui.user
 
 import android.content.Intent
 import android.os.Bundle

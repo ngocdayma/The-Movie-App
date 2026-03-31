@@ -16,8 +16,8 @@ import java.util.concurrent.TimeUnit
 class RetryInterceptor(private val maxRetry: Int = 3) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         var tryCount = 0
-        var request: Request = chain.request()
-        var response: Response? = null
+        val request: Request = chain.request()
+        var response: Response?
         var lastException: IOException? = null
 
         while (tryCount < maxRetry) {

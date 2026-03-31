@@ -1,4 +1,4 @@
-package com.example.movieinfo.ui.activities
+package com.example.movieinfo.ui.user
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,6 +14,7 @@ import com.example.movieinfo.R
 import com.example.movieinfo.databinding.ActivityLoginBinding
 import com.example.movieinfo.repository.AuthRepository
 import com.example.movieinfo.repository.UserRepository
+import com.example.movieinfo.ui.main.MainActivity
 import com.example.movieinfo.viewmodel.LoginViewModel
 import com.example.movieinfo.viewmodel.LoginViewModelFactory
 import com.google.android.gms.auth.api.signin.GoogleSignIn

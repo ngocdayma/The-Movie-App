@@ -1,4 +1,4 @@
-package com.example.movieinfo.ui.fragments
+package com.example.movieinfo.ui.main.fragment.home
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -15,15 +15,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieinfo.R
-import com.example.movieinfo.adapter.MovieHorizontalAdapter
+import com.example.movieinfo.ui.main.fragment.home.adapter.MovieHorizontalAdapter
 import com.example.movieinfo.databinding.FragmentHomeBinding
 import com.example.movieinfo.models.Movie
 import com.example.movieinfo.repository.AuthRepository
 import com.example.movieinfo.repository.MovieRepository
 import com.example.movieinfo.retrofit.RetrofitClient
-import com.example.movieinfo.ui.activities.DetailActivity
-import com.example.movieinfo.ui.activities.LoginActivity
-import com.example.movieinfo.ui.activities.ProfileActivity
+import com.example.movieinfo.ui.details.DetailActivity
+import com.example.movieinfo.ui.user.LoginActivity
+import com.example.movieinfo.ui.user.ProfileActivity
+import com.example.movieinfo.ui.main.fragment.see_more.SeeMoreFragment
+import com.example.movieinfo.ui.main.fragment.search.SearchFragment
 import com.example.movieinfo.util.Constants
 import com.example.movieinfo.viewmodel.MovieViewModel
 import com.example.movieinfo.viewmodel.MovieViewModelFactory
@@ -106,19 +108,23 @@ class HomeFragment : Fragment() {
         upcomingAdapter = MovieHorizontalAdapter(onMovieClick)
 
         binding.rvPopular.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = popularAdapter
         }
         binding.rvNowPlaying.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = nowPlayingAdapter
         }
         binding.rvTopRated.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = topRatedAdapter
         }
         binding.rvUpcoming.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = upcomingAdapter
         }
 

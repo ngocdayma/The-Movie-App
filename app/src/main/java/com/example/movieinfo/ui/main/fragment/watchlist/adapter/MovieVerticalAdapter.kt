@@ -1,5 +1,6 @@
-package com.example.movieinfo.adapter
+package com.example.movieinfo.ui.main.fragment.watchlist.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,10 +26,11 @@ class MovieVerticalAdapter(
         private val tvReleaseDate: TextView = itemView.findViewById(R.id.tvYear)
         private val tvDuration: TextView = itemView.findViewById(R.id.tvDuration)
 
+        @SuppressLint("SetTextI18n")
         fun bind(movie: MovieDetail) {
             tvTitle.text = movie.title
             tvRating.text = " %.1f".format(movie.vote_average ?: 0f)
-            tvGenres.text = movie.genres?.joinToString { it.name }
+            tvGenres.text = movie.genres.joinToString { it.name }
             tvReleaseDate.text = movie.release_date ?: ""
             tvDuration.text = if ((movie.runtime ?: 0) > 0) "${movie.runtime} min" else ""
 

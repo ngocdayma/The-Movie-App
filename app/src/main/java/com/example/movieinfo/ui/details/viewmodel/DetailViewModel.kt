@@ -1,4 +1,4 @@
-package com.example.movieinfo.viewmodel
+package com.example.movieinfo.ui.details.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData

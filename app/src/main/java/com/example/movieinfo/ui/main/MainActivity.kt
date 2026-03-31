@@ -1,20 +1,20 @@
-package com.example.movieinfo.ui.activities
+package com.example.movieinfo.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.movieinfo.R
 import com.example.movieinfo.databinding.ActivityMainBinding
-import com.example.movieinfo.ui.fragments.HomeFragment
-import com.example.movieinfo.ui.fragments.SearchFragment
-import com.example.movieinfo.ui.fragments.WatchlistFragment
+import com.example.movieinfo.ui.main.fragment.home.HomeFragment
+import com.example.movieinfo.ui.main.fragment.search.SearchFragment
+import com.example.movieinfo.ui.main.fragment.watchlist.WatchListFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val homeFragment = HomeFragment()
     private val searchFragment = SearchFragment()
-    private val watchlistFragment = WatchlistFragment()
+    private val watchlistFragment = WatchListFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

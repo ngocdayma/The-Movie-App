@@ -1,4 +1,4 @@
-package com.example.movieinfo.ui.dialogs
+package com.example.movieinfo.ui.user.change_password
 
 import android.annotation.SuppressLint
 import android.os.Bundle

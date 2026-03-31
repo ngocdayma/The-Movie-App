@@ -1,9 +1,9 @@
-package com.example.movieinfo.adapter
+package com.example.movieinfo.ui.main.fragment.search.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieinfo.R
@@ -34,6 +34,7 @@ class SearchHistoryAdapter(
 
     override fun getItemCount(): Int = historyList.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateData(newList: List<String>) {
         historyList.clear()
         historyList.addAll(newList)

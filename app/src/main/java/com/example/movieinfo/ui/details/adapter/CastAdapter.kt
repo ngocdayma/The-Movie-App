@@ -1,5 +1,6 @@
-package com.example.movieinfo.adapter
+package com.example.movieinfo.ui.details.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,7 @@ class CastAdapter(private var castList: List<Cast>) :
 
     override fun getItemCount() = castList.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateData(newList: List<Cast>) {
         castList = newList
         notifyDataSetChanged()

@@ -1,21 +1,23 @@
-package com.example.movieinfo.ui.fragments
+package com.example.movieinfo.ui.main.fragment.search
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.movieinfo.adapter.MovieSearchAdapter
-import com.example.movieinfo.adapter.SearchHistoryAdapter
+import com.example.movieinfo.ui.main.fragment.search.adapter.MovieSearchAdapter
 import com.example.movieinfo.databinding.FragmentSearchBinding
 import com.example.movieinfo.repository.MovieRepository
 import com.example.movieinfo.retrofit.RetrofitClient
-import com.example.movieinfo.ui.activities.DetailActivity
+import com.example.movieinfo.ui.details.DetailActivity
+import com.example.movieinfo.ui.main.fragment.search.adapter.SearchHistoryAdapter
 import com.example.movieinfo.util.SearchHistoryManager
 import com.example.movieinfo.viewmodel.SearchViewModel
 import com.example.movieinfo.viewmodel.SearchViewModelFactory
@@ -72,7 +74,7 @@ class SearchFragment : Fragment() {
             val query = binding.etSearch.text.toString().trim()
             if (query.isNotEmpty()) {
                 viewModel.performSearch(requireContext(), query)
-                val imm = requireContext().getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+                val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
                 binding.etSearch.clearFocus()
             }

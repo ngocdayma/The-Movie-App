@@ -1,4 +1,4 @@
-package com.example.movieinfo.viewmodel
+package com.example.movieinfo.ui.details.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

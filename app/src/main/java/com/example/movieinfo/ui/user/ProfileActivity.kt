@@ -1,14 +1,13 @@
-package com.example.movieinfo.ui.activities
+package com.example.movieinfo.ui.user
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.movieinfo.databinding.ActivityProfileBinding
 import com.example.movieinfo.repository.AuthRepository
 import com.example.movieinfo.repository.UserRepository
-import com.example.movieinfo.ui.dialogs.ChangePasswordDialogFragment
+import com.example.movieinfo.ui.user.change_password.ChangePasswordDialogFragment
 import com.example.movieinfo.viewmodel.ProfileViewModel
 import com.example.movieinfo.viewmodel.ProfileViewModelFactory
 import com.example.movieinfo.viewmodel.Resource

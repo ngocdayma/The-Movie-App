@@ -1,4 +1,4 @@
-package com.example.movieinfo.ui.fragments
+package com.example.movieinfo.ui.main.fragment.see_more
 
 import android.content.Context
 import android.content.Intent
@@ -14,10 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.movieinfo.adapter.SeeMoreAdapter
+import com.example.movieinfo.ui.main.fragment.see_more.adapter.SeeMoreAdapter
 import com.example.movieinfo.databinding.FragmentSeemoreBinding
 import com.example.movieinfo.retrofit.RetrofitClient
-import com.example.movieinfo.ui.activities.DetailActivity
+import com.example.movieinfo.ui.details.DetailActivity
 import com.example.movieinfo.util.Constants
 import kotlinx.coroutines.launch
 
@@ -69,7 +69,7 @@ class SeeMoreFragment : Fragment() {
         // Set span size lookup để loading item chiếm full width
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if (movieAdapter.getViewType(position) == SeeMoreAdapter.VIEW_TYPE_LOADING) {
+                return if (movieAdapter.getViewType(position) == SeeMoreAdapter.Companion.VIEW_TYPE_LOADING) {
                     3 // Chiếm full width (3 columns)
                 } else {
                     1 // Movie item chiếm 1 column

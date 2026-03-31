@@ -15,7 +15,7 @@
         android:theme="@style/Theme.MovieInfo"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,17 +23,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.DetailActivity"/>
+        <activity android:name=".ui.details.DetailActivity"/>
         <activity
-            android:name=".ui.activities.TrailerActivity"
+            android:name=".ui.trailer.TrailerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"/>
         <activity
-            android:name=".ui.activities.LoginActivity"
+            android:name=".ui.user.LoginActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"/>
         <activity
-            android:name=".ui.activities.RegisterActivity"/>
+            android:name=".ui.user.RegisterActivity"/>
         <activity
-            android:name=".ui.activities.ProfileActivity"
+            android:name=".ui.user.ProfileActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"/>
 
         <meta-data

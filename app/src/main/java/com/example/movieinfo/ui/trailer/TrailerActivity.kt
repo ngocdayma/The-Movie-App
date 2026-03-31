@@ -1,4 +1,4 @@
-package com.example.movieinfo.ui.activities
+package com.example.movieinfo.ui.trailer
 
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
@@ -56,6 +56,7 @@ class TrailerActivity : AppCompatActivity() {
         webView.loadUrl(videoUrl)
     }
 
+    @Deprecated("This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.")
     override fun onBackPressed() {
         if (webView.canGoBack()) {
             webView.goBack()

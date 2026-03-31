@@ -1,5 +1,6 @@
-package com.example.movieinfo.adapter
+package com.example.movieinfo.ui.main.fragment.search.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ class MovieSearchAdapter(
         private val tvRating: TextView = itemView.findViewById(R.id.tvRating)
         private val tvYear: TextView = itemView.findViewById(R.id.tvYear)
 
+        @SuppressLint("SetTextI18n")
         fun bind(movie: MovieDetail) {
             tvTitle.text = movie.title
             tvRating.text = " %.1f".format(movie.vote_average)
@@ -48,6 +50,7 @@ class MovieSearchAdapter(
 
     override fun getItemCount(): Int = movieList.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateData(newList: List<MovieDetail>) {
         movieList.clear()
         movieList.addAll(newList)

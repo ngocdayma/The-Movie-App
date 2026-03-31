@@ -1,5 +1,6 @@
-package com.example.movieinfo.adapter
+package com.example.movieinfo.ui.main.fragment.see_more.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,6 +79,7 @@ class SeeMoreAdapter(
         return if (isLoadingMore) movies.size + 1 else movies.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateData(newMovies: List<Movie>) {
         movies.clear()
         movies.addAll(newMovies)
@@ -95,18 +97,13 @@ class SeeMoreAdapter(
             val wasLoading = isLoadingMore
             isLoadingMore = loading
 
-            if (wasLoading && !loading) {
+            if (wasLoading) {
                 // Remove loading item
                 notifyItemRemoved(movies.size)
-            } else if (!wasLoading && loading) {
+            } else {
                 // Add loading item
                 notifyItemInserted(movies.size)
             }
         }
-    }
-
-    fun clearData() {
-        movies.clear()
-        notifyDataSetChanged()
     }
 }

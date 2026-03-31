@@ -1,5 +1,6 @@
-package com.example.movieinfo.ui.fragments
+package com.example.movieinfo.ui.main.fragment.watchlist
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,19 +10,20 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.movieinfo.adapter.MovieVerticalAdapter
+import com.example.movieinfo.R
+import com.example.movieinfo.ui.main.fragment.watchlist.adapter.MovieVerticalAdapter
 import com.example.movieinfo.databinding.FragmentWatchlistBinding
 import com.example.movieinfo.repository.AuthRepository
 import com.example.movieinfo.repository.MovieRepository
 import com.example.movieinfo.retrofit.RetrofitClient
-import com.example.movieinfo.ui.activities.DetailActivity
-import com.example.movieinfo.ui.activities.LoginActivity
+import com.example.movieinfo.ui.details.DetailActivity
+import com.example.movieinfo.ui.user.LoginActivity
 import com.example.movieinfo.util.WatchlistManager
 import com.example.movieinfo.viewmodel.Resource
 import com.example.movieinfo.viewmodel.WatchlistViewModel
 import com.example.movieinfo.viewmodel.WatchlistViewModelFactory
 
-class WatchlistFragment : Fragment() {
+class WatchListFragment : Fragment() {
 
     private var _binding: FragmentWatchlistBinding? = null
     private val binding get() = _binding!!
@@ -85,6 +87,7 @@ class WatchlistFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun observeWatchlist() {
         viewModel.movies.observe(viewLifecycleOwner) { state ->
             when (state) {
@@ -95,7 +98,7 @@ class WatchlistFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    if (state.data.isNullOrEmpty()) {
+                    if (state.data.isEmpty()) {
                         binding.rvWatchlist.visibility = View.GONE
                         binding.tvEmpty.text = "You haven't saved any movies yet. Explore more!"
                         binding.tvEmpty.visibility = View.VISIBLE
@@ -108,7 +111,7 @@ class WatchlistFragment : Fragment() {
                 is Resource.Error -> {
                     binding.progressBar.visibility = View.GONE
                     binding.rvWatchlist.visibility = View.GONE
-                    binding.tvEmpty.text = "Failed to load watchlist."
+                    binding.tvEmpty.text = context?.getString(R.string.failed_to_load_watchlist)
                     binding.tvEmpty.visibility = View.VISIBLE
                     Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
                 }

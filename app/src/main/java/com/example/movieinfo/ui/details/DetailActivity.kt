@@ -1,9 +1,15 @@
-package com.example.movieinfo.ui.activities
+package com.example.movieinfo.ui.details
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -11,15 +17,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieinfo.R
-import com.example.movieinfo.adapter.CastAdapter
-import com.example.movieinfo.adapter.ReviewAdapter
+import com.example.movieinfo.ui.details.adapter.CastAdapter
+import com.example.movieinfo.ui.details.adapter.ReviewAdapter
 import com.example.movieinfo.repository.MovieRepository
 import com.example.movieinfo.retrofit.RetrofitClient
+import com.example.movieinfo.ui.trailer.TrailerActivity
 import com.example.movieinfo.util.Constants
 import com.example.movieinfo.util.WatchlistManager
-import com.example.movieinfo.viewmodel.DetailViewModel
-import com.example.movieinfo.viewmodel.DetailViewModelFactory
-import com.example.movieinfo.viewmodel.MovieDetailFull
+import com.example.movieinfo.ui.details.viewmodel.DetailViewModel
+import com.example.movieinfo.ui.details.viewmodel.DetailViewModelFactory
+import com.example.movieinfo.ui.details.viewmodel.MovieDetailFull
+import com.google.firebase.auth.FirebaseAuth
 import java.util.Locale
 
 class DetailActivity : AppCompatActivity() {
@@ -120,7 +128,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setupWatchlist() {
-        val isLoggedIn = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser != null
+        val isLoggedIn = FirebaseAuth.getInstance().currentUser != null
 
         cbWatchlist.isChecked = WatchlistManager.isInWatchlist(this, movieId)
 
@@ -138,11 +146,12 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun bindMovieDetailFull(full: MovieDetailFull) {
         val detail = full.detail
         tvTitle.text = detail.title
         tvReleaseDate.text = detail.release_date
-        tvRating.text = String.format(Locale.US, "%.1f", detail.vote_average)
+        tvRating.text = String.Companion.format(Locale.US, "%.1f", detail.vote_average)
         tvOverview.text = detail.overview
         tvDuration.text = "${detail.runtime}min"
         tvGenre.text = detail.genres.joinToString { it.name }
